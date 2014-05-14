@@ -1,10 +1,10 @@
 TH-GameEngine
 =============
+### Description
 
-A simple game engine for java programming. A light librairy without any dependencies.
+A simple game engine for java programming. A light librairy without any required dependencies.
 
-How to install
-=============
+### How to install
 
 Copy all files from src/ to your project and compile !
 
