@@ -11,6 +11,8 @@ Copy all files from src/ to your project and compile !
 Doc
 =============
 
+### Basic Game
+
 Here is a basic example of how to start a basic program with TH-GameEngine with a Menu
 ```java
 public class Main {
@@ -67,6 +69,37 @@ public class MenuState extends State {
 		g.drawString(s, (int) (container.window.getWidth()/2 - g.getFontMetrics().getStringBounds(s, g).getWidth()/2),y);
 	}
 }
+```
+
+### Events
+THGE has a events Engine
+When a event is fired with the FireEvent() method, the onEvent() method is called.
+
+```java
+public class Exemple extends State {
+	private Entity player;
+
+	public Exemple(AppContainer ac) {
+		super(ac);
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void update(AppContainer ac, State st) {
+		// Logic stuff
+		
+		if(!player.isAlive()) {
+			this.fireEvent("death", player.getName());
+		}
+	}
+	
+	public void onEvent(String name, Object param) {
+		if(name.equals("death")) {
+			String player_name = (String) param;
+			System.out.println(player_name+" is dead");
+		}
+	}
+}
+
 ```
 
 To be continued ...
