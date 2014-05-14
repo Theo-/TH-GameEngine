@@ -37,11 +37,11 @@ public class MenuState extends State {
 		super(ac);
 	}
 	
-	public void update(AppContainer app) {
+	public void update(AppContainer app, State state) {
 		
 	}
 	
-	public void draw(AppContainer container, Graphics g) {
+	public void draw(AppContainer container, State state, Graphics g) {
 		g.setColor(Color.white);
 		g.fillRect(0, 0, container.window.getWidth(), container.window.getHeight());
 
