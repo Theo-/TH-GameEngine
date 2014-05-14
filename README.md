@@ -13,7 +13,7 @@ Doc
 
 ### Basic Game
 
-Here is a basic example of how to start a basic program with TH-GameEngine with a Menu
+Here is a basic example of how to start a basic program with TH-GameEngine
 ```java
 public class Main {
 	public static String version = "1.0r7";
