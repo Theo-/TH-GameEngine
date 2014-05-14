@@ -1,0 +1,33 @@
+package com.TH.ge.mainCore;
+
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+public class Resources {
+	private HashMap<String, Image> loaded_images;
+	private ClassLoader class_loader_instance;
+	
+	public Resources() throws IOException {
+		class_loader_instance = Thread.currentThread().getContextClassLoader();
+		
+		loaded_images = new HashMap<String, Image>();
+	}
+	
+	public Image getImageResource(String name) throws IOException {
+		if(loaded_images.containsKey(name)) {
+			this.loadImageResource(name);
+		}
+		
+		Image image = loaded_images.get(name);
+		return image;
+	}
+	
+	public void loadImageResource(String name) throws IOException {
+		Image image = ImageIO.read(class_loader_instance.getResourceAsStream(name));
+	}
+}
