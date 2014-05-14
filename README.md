@@ -28,7 +28,7 @@ public class Main {
 		app.startApp();
 	}
 }
-``
+```
 
 And the menu class
 ```java
