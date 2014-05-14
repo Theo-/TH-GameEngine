@@ -59,12 +59,7 @@ public class MenuState extends State {
 		g.setFont(new Font(fontName, Font.PLAIN, 20));
 		this.drawCentered("Copyright Me", 500, g);
 	}
-	
-	// Appel�e lorsque une touche est press�e
-	public void keyPressed(KeyEvent evt) {
-		container.enterState(container.GAME);
-	}
-	
+
 	public void drawCentered(String s, int y, Graphics g) {
 		g.drawString(s, (int) (container.window.getWidth()/2 - g.getFontMetrics().getStringBounds(s, g).getWidth()/2),y);
 	}
@@ -100,6 +95,40 @@ public class Exemple extends State {
 	}
 }
 
+```
+
+This system is also used for Key and Mouse events
+
+```java
+/**
+	 * Method called every time a key event is received
+	 * @param type The type of the event
+	 * Can Be
+	 * - typed
+	 * - released
+	 * - pressed
+	 * @param evt
+	 * The KeyEvent associated
+	 */
+	public void onKeyEvent(String type, KeyEvent evt) {
+		
+	}
+	
+	/**
+	 * Method called every time a mouse event is received
+	 * @param type The type of the event
+	 * Can Be
+	 * - clicked
+	 * - exited
+	 * - entered
+	 * - released
+	 * - pressed
+	 * @param evt
+	 * The KeyEvent associated
+	 */
+	public void onMouseEvent(String type, MouseEvent evt) {
+		
+	}
 ```
 
 To be continued ...
