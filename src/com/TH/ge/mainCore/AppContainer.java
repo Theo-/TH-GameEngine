@@ -19,24 +19,23 @@ import javax.swing.JFrame;
 import com.TH.ge.renderCore.Render;
 
 public class AppContainer extends TimerTask implements KeyListener, MouseListener {
-	public int MENU = 0;
-	public int GAME = 1;
-	public int GAMEOVER = 2;
-	
-	private int STATE = MENU;
 	private HashMap<Integer, Class<?>> states = new HashMap<Integer, Class<?>>();
 	private State current = null;
+	private int STATE;
 	
 	public JFrame window;
 	private Timer timer;
 	private Render render;
 	private Resources resources;
 	
-	public AppContainer() throws IOException {
+	private String window_name;
+	
+	public AppContainer(String name) throws IOException {
 		window = new JFrame();
+		window_name = name;
 		
 		window.setVisible(true);
-		window.setTitle("Pop Wings");
+		window.setTitle(window_name);
 		window.setSize(new Dimension(1280,768));
 		window.setLocationRelativeTo(null);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,15 +50,41 @@ public class AppContainer extends TimerTask implements KeyListener, MouseListene
 		resources = new Resources();
 	}
 	
+	public void setWindowSize(int width, int height) {
+		window.setSize(new Dimension(width, height));
+	}
+	public void setWindowSize(Dimension dimensions) {
+		window.setSize(dimensions);
+	}
+	
+	/**
+	 * Start the application timer
+	 */
 	public void startApp() {
 		timer = new Timer();
 		timer.schedule(this, 0, 100/6);
 	}
 	
+	/**
+	 * Stopping the application timer
+	 */
+	public void stopApp() {
+		timer.cancel();
+	}
+	
+	/**
+	 * Add a possible state to the application
+	 * @param state_id ID of the state
+	 * @param state_class The class (like MyClass.class)
+	 */
 	public void addState(int state_id, Class state_class) {
 		this.states.put(state_id, state_class);
 	}
 	
+	/**
+	 * Calling the updates methods of the current state
+	 * @param g Graphics object
+	 */
 	public void update(Graphics g) {
 		if(current == null) { return;}
 		
@@ -67,6 +92,10 @@ public class AppContainer extends TimerTask implements KeyListener, MouseListene
 		current.draw(this, current, g);
 	}
 	
+	/**
+	 * Create the class of the desirated State
+	 * @param state The ID of the state
+	 */
 	public void enterState(int state) {
 		try {
 			STATE = state;
@@ -101,53 +130,57 @@ public class AppContainer extends TimerTask implements KeyListener, MouseListene
 	public void run() {
 		this.render.repaint();
 	}
+	
+	public void fireEvent(String name, Object param) {
+		this.current.onEvent(name, param);
+	}
 
-	// Mouse LISTENER
+	// Mouse Listener
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub 
+	public void mouseClicked(MouseEvent evt) {
+		current.onMouseEvent("clicked", evt);
 		
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseEntered(MouseEvent evt) {
+		current.onMouseEvent("entered", evt);
 		
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseExited(MouseEvent evt) {
+		current.onMouseEvent("exited", evt);
 		
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mousePressed(MouseEvent evt) {
+		current.onMouseEvent("pressed", evt);
 		
 	}
 
 	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseReleased(MouseEvent evt) {
+		current.onMouseEvent("released", evt);
 		
 	}
 
-	// KEYL
+	// KEY Listener
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyPressed(KeyEvent evt) {
+		current.onKeyEvent("pressed", evt);
 		
 	}
 
 	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
+	public void keyReleased(KeyEvent evt) {
+		current.onKeyEvent("released", evt);
 		
 	}
 
 	@Override
 	public void keyTyped(KeyEvent evt) {
-		current.keyPressed(evt);
+		current.onKeyEvent("typed", evt);
 	}
 }
